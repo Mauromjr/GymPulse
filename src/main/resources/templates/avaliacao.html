@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymPulse - Avaliação de Progresso</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .page-title-center {
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin: 8px 0;
+            text-transform: uppercase;
+            line-height: 1.3;
+        }
+
+        .upload-card {
+            width: 100%;
+            height: 220px;
+            background-color: #1a1a1a;
+            border: 2px dashed #adff00;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            box-sizing: border-box;
+            transition: background-color 0.2s;
+        }
+
+        .upload-card:hover {
+            background-color: #222222;
+        }
+
+        .camera-icon-box {
+            font-size: 3rem;
+            color: #777777;
+        }
+
+        .upload-text {
+            color: #aaaaaa;
+            font-size: 0.85rem;
+            text-align: center;
+        }
+
+        .category-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .category-options {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .category-options label {
+            flex: 1;
+        }
+
+        .category-options input[type="radio"] {
+            display: none;
+        }
+
+        .category-btn {
+            width: 100%;
+            height: 40px;
+            background-color: #222222;
+            color: #ffffff;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid #2a2a2a;
+            user-select: none;
+            box-sizing: border-box;
+        }
+
+        .category-options input[type="radio"]:checked + .category-btn {
+            background-color: #adff00;
+            color: #000000;
+            border-color: #adff00;
+            font-weight: 800;
+        }
+
+        /* observacao */
+        .observation-input {
+            width: 100%;
+            height: 75px;
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 14px;
+            padding: 12px;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.85rem;
+            box-sizing: border-box;
+            resize: none;
+            outline: none;
+        }
+
+        .observation-input:focus {
+            border-color: #adff00;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="app-screen" style="justify-content: flex-start;">
+        
+        <!-- pesinho voltando para home -->
+        <header class="top-header" style="position: relative;">
+            <div class="profile-avatar">
+                <i class="fa-regular fa-user"></i>
+            </div>
+            
+            <a href="home.html" th:href="@{/home}" style="position: absolute; left: 50%; transform: translateX(-50%); text-decoration: none;">
+                <i class="fa-solid fa-dumbbell" style="font-size: 1.8rem; color: #adff00;"></i>
+            </a>
+            
+            <button class="icon-btn">
+                <i class="fa-solid fa-bars" style="color: #adff00; font-size: 1.2rem;"></i>
+            </button>
+        </header>
+
+        <form th:action="@{/avaliacao/enviar}" method="POST" enctype="multipart/form-data" class="page-container">
+            
+            <h1 class="page-title-center">NOVA AVALIAÇÃO DE<br>PROGRESSO</h1>
+
+            <label class="upload-card">
+                <input type="file" name="foto" accept="image/*" style="display: none;" required>
+                <div class="camera-icon-box">
+                    <i class="fa-solid fa-camera"></i>
+                </div>
+                <span class="upload-text">Toque para adicionar fotos ou vídeos</span>
+            </label>
+
+            <!-- categoria da Foto -->
+            <div>
+                <span class="category-label">Categoria da Foto</span>
+                <div class="category-options">
+                    <label>
+                        <input type="radio" name="categoria" value="frente" checked>
+                        <span class="category-btn">Frente</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="categoria" value="lado">
+                        <span class="category-btn">Lado</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="categoria" value="costas">
+                        <span class="category-btn">Costas</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- campo de texto -->
+            <textarea name="observacao" class="observation-input" placeholder="Adicionar observações... (opcional)"></textarea>
+
+            <button type="submit" class="btn-primary" style="margin-top: 6px;">ENVIAR PARA AVALIAÇÃO</button>
+
+        </form>
+
+    </main>
+
+</body>
+</html>

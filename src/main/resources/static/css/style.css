@@ -1,0 +1,175 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* container tipo celular */
+.app-screen {
+    width: 100%;
+    max-width: 390px;
+    min-height: 844px;
+    background-color: #000000;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    border: 1px solid #1a1a1a;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.logo-img {
+    width: 110px;
+    height: auto;
+}
+
+.logo-title {
+    font-size: 1.6rem;
+    font-weight: 900;
+    font-style: italic;
+    color: #ffffff;
+    letter-spacing: 1px;
+    margin-top: 5px;
+}
+
+/* títulos das páginas */
+.page-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* formulários e inputs */
+.form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.input-box {
+    width: 100%;
+    height: 48px;
+    background-color: #212121;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+    gap: 10px;
+}
+
+.input-box i {
+    color: #adff00;
+    font-size: 1.1rem;
+}
+
+.input-box input, 
+.input-box textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 0.95rem;
+}
+
+.input-box input::placeholder,
+.input-box textarea::placeholder {
+    color: #757575;
+}
+
+/* botões principais */
+.btn-primary {
+    width: 100%;
+    height: 52px;
+    background-color: #adff00;
+    color: #000000;
+    border: none;
+    border-radius: 26px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: opacity 0.2s;
+    margin-top: 15px;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.top-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid #adff00;
+    background-color: #212121;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+}
+
+.header-logo {
+    width: 45px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: #adff00;
+    font-size: 1.5rem;
+    cursor: pointer;
+    position: relative;
+}
+
+.badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    background-color: #ff3b30;
+    color: #fff;
+    font-size: 0.65rem;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}

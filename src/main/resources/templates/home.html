@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymPulse - Início</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .welcome-box {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .welcome-title {
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .welcome-subtitle {
+            font-size: 0.85rem;
+            color: #888888;
+        }
+
+        .workout-card {
+            width: 100%;
+            background-color: #121212;
+            border: 1px solid #262626;
+            border-radius: 20px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            box-sizing: border-box;
+        }
+
+        .workout-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .workout-tag {
+            background-color: #adff00;
+            color: #000000;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 12px;
+            text-transform: uppercase;
+        }
+
+        .personal-name {
+            font-size: 0.8rem;
+            color: #aaaaaa;
+        }
+
+        .workout-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .exercise-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .exercise-item {
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .exercise-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .exercise-icon {
+            width: 36px;
+            height: 36px;
+            background-color: #262626;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #adff00;
+            font-size: 1rem;
+        }
+
+        .exercise-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .exercise-meta {
+            font-size: 0.8rem;
+            color: #adff00;
+            font-weight: 700;
+        }
+
+        .quick-actions-title {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 4px;
+        }
+
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .action-card {
+            background-color: #1a1a1a;
+            border: 1px solid #2a2a2a;
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            text-decoration: none;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+
+        .action-card:hover {
+            border-color: #adff00;
+            background-color: #222222;
+        }
+
+        .action-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #262626;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #adff00;
+            font-size: 1.2rem;
+        }
+
+        .action-text {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="app-screen" style="justify-content: flex-start;">
+        
+        <!-- Header -->
+        <header class="top-header" style="position: relative;">
+            <div class="profile-avatar">
+                <i class="fa-regular fa-user"></i>
+            </div>
+            
+            <i class="fa-solid fa-dumbbell" style="font-size: 1.8rem; color: #adff00; position: absolute; left: 50%; transform: translateX(-50%);"></i>
+            
+            <!-- Sino com link para Solicitações -->
+            <a href="solicitacoes.html" th:href="@{/solicitacoes}" class="icon-btn" style="text-decoration: none;">
+                <i class="fa-regular fa-bell"></i>
+                <span class="badge">1</span>
+            </a>
+        </header>
+
+        <div class="page-container">
+            
+            <div class="welcome-box">
+                <h1 class="welcome-title">Olá, <span th:text="${aluno != null ? aluno.nome : 'Aluno'}">Aluno</span>! 👋</h1>
+                <p class="welcome-subtitle">Confira seu treino de hoje e mantenha o foco!</p>
+            </div>
+
+            <!-- card de treino -->
+            <section class="workout-card">
+                <div class="workout-header">
+                    <span class="workout-tag">Treino de Hoje</span>
+                    <span class="personal-name" th:text="${aluno != null ? 'Personal: ' + aluno.nomePersonal : 'Personal: Mauro'}">Personal: Mauro</span>
+                </div>
+
+                <div class="workout-title" th:text="${treino != null ? treino.nome : 'TREINO A - PEITO E TRÍCEPS'}">TREINO A - PEITO E TRÍCEPS</div>
+
+                <div class="exercise-list">
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">
+                                <i class="fa-solid fa-dumbbell"></i>
+                            </div>
+                            <span class="exercise-name">Supino Reto com Barra</span>
+                        </div>
+                        <span class="exercise-meta">4x12</span>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">
+                                <i class="fa-solid fa-dumbbell"></i>
+                            </div>
+                            <span class="exercise-name">Supino Inclinado Halteres</span>
+                        </div>
+                        <span class="exercise-meta">3x10</span>
+                    </div>
+
+                    <div class="exercise-item">
+                        <div class="exercise-info">
+                            <div class="exercise-icon">
+                                <i class="fa-solid fa-dumbbell"></i>
+                            </div>
+                            <span class="exercise-name">Tríceps Pulley Corda</span>
+                        </div>
+                        <span class="exercise-meta">4x15</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ações rápidas -->
+            <span class="quick-actions-title">Ações Rápidas</span>
+            
+            <div class="quick-actions-grid">
+                <a href="avaliacao.html" th:href="@{/avaliacao}" class="action-card">
+                    <div class="action-icon">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <span class="action-text">Nova Avaliação</span>
+                </a>
+
+                <a href="solicitacoes.html" th:href="@{/solicitacoes}" class="action-card">
+                    <div class="action-icon">
+                        <i class="fa-regular fa-clipboard"></i>
+                    </div>
+                    <span class="action-text">Solicitações</span>
+                </a>
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

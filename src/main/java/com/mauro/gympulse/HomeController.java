@@ -13,6 +13,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Controller
 public class HomeController {
 
+    private record Conta(String email, String senha, String tipo) {}
+
+    private final List<Conta> contas = new CopyOnWriteArrayList<>(List.of(
+        new Conta("aluno@gympulse.com", "123456", "aluno"),
+        new Conta("personal@gympulse.com", "123456", "personal")
+    ));
+
     private final List<Solicitacao> solicitacoes = new CopyOnWriteArrayList<>(List.of(
         new Solicitacao(1L, "Mauro", "P001")
     ));
@@ -33,12 +40,57 @@ public class HomeController {
             @RequestParam String senha,
             Model model) {
 
-        return "redirect:/home";
+        for (Conta conta : contas) {
+            if (conta.email().equalsIgnoreCase(email.trim()) && conta.senha().equals(senha)) {
+                return conta.tipo().equals("personal") ? "redirect:/personal/home" : "redirect:/home";
+            }
+        }
+
+        model.addAttribute("erro", "E-mail ou senha incorretos.");
+        return "login";
     }
 
     @PostMapping("/cadastro")
-    public String realizarCadastro() {
+    public String realizarCadastro(
+            @RequestParam String email,
+            @RequestParam String senha,
+            @RequestParam String confirmarSenha,
+            @RequestParam String tipo,
+            Model model) {
+        if (!tipo.equals("aluno") && !tipo.equals("personal")) {
+            model.addAttribute("erro", "Selecione Aluno ou Personal.");
+            return "cadastro";
+        }
+        if (email.isBlank() || senha.isBlank() || !senha.equals(confirmarSenha)) {
+            model.addAttribute("erro", "Preencha o e-mail e confirme a mesma senha.");
+            return "cadastro";
+        }
+        if (contas.stream().anyMatch(conta -> conta.email().equalsIgnoreCase(email.trim()))) {
+            model.addAttribute("erro", "Este e-mail já está cadastrado.");
+            return "cadastro";
+        }
+        contas.add(new Conta(email.trim(), senha, tipo));
         return "redirect:/login";
+    }
+
+    @GetMapping("/personal/home")
+    public String personalHome() {
+        return "personal_home";
+    }
+
+    @GetMapping("/personal/solicitacoes")
+    public String personalSolicitacoes() {
+        return "personal_solicitacoes";
+    }
+
+    @GetMapping("/personal/treino")
+    public String personalTreino() {
+        return "personal_treino";
+    }
+
+    @GetMapping("/personal/avaliacao")
+    public String personalAvaliacao() {
+        return "personal_avaliacao";
     }
 
     @GetMapping("/home")

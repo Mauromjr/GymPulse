@@ -104,7 +104,14 @@
                 <p class="auth-subtitle">Crie sua conta para começar seus treinos</p>
             </div>
 
+            <p th:if="${erro}" th:text="${erro}" style="color: #ff7777;" role="alert"></p>
+
             <form action="home.html" th:action="@{/cadastro}" method="POST" class="auth-form">
+
+                <div class="input-box" style="color: #ffffff;">
+                    <label><input type="radio" name="tipo" value="aluno" checked required> Aluno</label>
+                    <label><input type="radio" name="tipo" value="personal" required> Personal</label>
+                </div>
                 
                 <div class="input-box">
                     <i class="fa-regular fa-user"></i>

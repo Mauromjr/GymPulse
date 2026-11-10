@@ -98,6 +98,8 @@
                 <h1 class="auth-title">GYMPULSE</h1>
             </div>
 
+            <p th:if="${erro}" th:text="${erro}" style="color: #ff7777;" role="alert"></p>
+
             <form action="home.html" th:action="@{/login}" method="POST" class="auth-form">
                 
                 <div class="input-box">

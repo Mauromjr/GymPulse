@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GymPulse - Montar Treino</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .page-container { width: 100%; display: flex; flex-direction: column; gap: 16px; }
+        
+        .week-selector {
+            display: flex;
+            justify-content: space-between;
+            background-color: #1a1a1a;
+            border-radius: 20px;
+            padding: 8px 12px;
+        }
+        .day-btn { color: #ffffff; font-size: 0.8rem; font-weight: 700; padding: 6px 10px; border-radius: 12px; text-decoration: none; }
+        .day-btn.active { background-color: #adff00; color: #000000; }
+
+        .editor-panel {
+            background-color: #121212;
+            border: 1px solid #2a2a2a;
+            border-radius: 20px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-sizing: border-box;
+        }
+        
+        .editor-header { display: flex; align-items: center; gap: 12px; }
+        .editor-icon { width: 40px; height: 40px; border: 1px solid #adff00; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #adff00; font-size: 1.2rem; }
+        .editor-title input { background: transparent; border: none; color: #aaaaaa; outline: none; font-size: 0.85rem; width: 100%; margin-top: 4px; }
+
+        .exercise-card {
+            background-color: #1a1a1a;
+            border-radius: 16px;
+            padding: 12px;
+            display: grid;
+            grid-template-columns: auto 60px 1fr auto;
+            gap: 12px;
+            align-items: center;
+        }
+        .exercise-img { width: 60px; height: 60px; background-color: #cccccc; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #666; font-size: 0.7rem; }
+        .exercise-info { display: flex; flex-direction: column; gap: 6px; }
+        .exercise-info h4 { margin: 0; color: #ffffff; font-size: 0.95rem; font-weight: 800; }
+        .exercise-stats { display: flex; flex-wrap: wrap; gap: 8px; font-size: 0.75rem; color: #aaaaaa; }
+        .exercise-stats span strong { color: #adff00; }
+        
+        .action-column { display: flex; flex-direction: column; gap: 6px; }
+        .btn-mini { background: transparent; border: 1px solid #444; color: #aaa; border-radius: 8px; padding: 4px 8px; font-size: 0.7rem; cursor: pointer; display: flex; align-items: center; gap: 4px; justify-content: center; }
+        .btn-mini.remove { color: #ff4444; border-color: #552222; }
+
+        .btn-outline { background: transparent; border: 2px solid #adff00; color: #adff00; font-weight: 800; border-radius: 25px; height: 45px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; text-decoration: none; width: 100%; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+    <main class="app-screen" style="justify-content: flex-start;">
+        
+        <header class="top-header" style="position: relative;">
+            <div class="profile-avatar"><i class="fa-regular fa-user"></i></div>
+            <div style="text-align: center; position: absolute; left: 50%; transform: translateX(-50%);">
+                <i class="fa-solid fa-dumbbell" style="font-size: 1.5rem; color: #adff00;"></i>
+                <div style="color: #adff00; font-size: 0.75rem; font-weight: 800; margin-top: 2px; text-transform: uppercase;">Aluno</div>
+                <div style="color: #ffffff; font-weight: 800; font-size: 0.9rem;">Mateus Albuquerque</div>
+            </div>
+            <a href="personal_home.html" class="icon-btn" style="text-decoration: none;"><i class="fa-solid fa-bars"></i></a>
+        </header>
+
+        <div class="page-container">
+            <div class="week-selector">
+                <a href="#" class="day-btn">Seg</a>
+                <a href="#" class="day-btn">Ter</a>
+                <a href="#" class="day-btn active">Qua</a>
+                <a href="#" class="day-btn">Qui</a>
+                <a href="#" class="day-btn">Sex</a>
+                <a href="#" class="day-btn">Sáb</a>
+                <a href="#" class="day-btn">Dom</a>
+            </div>
+
+            <form th:action="@{/personal/treino/salvar}" method="POST" class="editor-panel">
+                
+                <div class="editor-header">
+                    <div class="editor-icon"><i class="fa-regular fa-pen-to-square"></i></div>
+                    <div class="editor-title">
+                        <span style="color: #fff; font-weight: 800; font-size: 0.95rem;">Editar treino</span>
+                        <input type="text" name="nomeTreino" placeholder="Adicionar nome do treino..." required>
+                    </div>
+                </div>
+
+                <div class="exercise-card">
+                    <i class="fa-solid fa-grip-vertical" style="color: #555;"></i>
+                    <div class="exercise-img">70 x 70</div>
+                    <div class="exercise-info">
+                        <h4>Crucifixo</h4>
+                        <div class="exercise-stats">
+                            <span>Séries: <strong>2</strong></span>
+                            <span>Reps: <strong>5-9</strong></span>
+                            <span>Carga: <strong>50kg</strong></span>
+                            <span>Descanso: <strong>180s</strong></span>
+                        </div>
+                    </div>
+                    <div class="action-column">
+                        <button type="button" class="btn-mini"><i class="fa-solid fa-pen"></i> Editar</button>
+                        <button type="button" class="btn-mini remove"><i class="fa-regular fa-trash-can"></i> Remover</button>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-primary" style="margin-top: 8px;"><i class="fa-solid fa-plus"></i> ADICIONAR EXERCÍCIO</button>
+                <button type="submit" class="btn-outline">Salvar treino</button>
+            </form>
+        </div>
+
+    </main>
+</body>
+</html>

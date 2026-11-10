@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
+import java.util.List;
+
 @Controller
 public class HomeController {
 
@@ -35,7 +37,12 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String home() {
+    public String home(Model model) {
+        List<Solicitacao> solicitacoes = buscarSolicitacoes();
+
+        model.addAttribute("solicitacoes", solicitacoes);
+        model.addAttribute("totalSolicitacoes", solicitacoes.size());
+
         return "home";
     }
 
@@ -52,5 +59,12 @@ public class HomeController {
     @GetMapping("/solicitacoes")
     public String solicitacoes() {
         return "solicitacoes";
+    }
+
+    private List<Solicitacao> buscarSolicitacoes() {
+        // Dados de exemplo. Depois dá para trocar por um banco de dados.
+        return List.of(
+            new Solicitacao(1L,"Mauro", "P001")
+        );
     }
 }

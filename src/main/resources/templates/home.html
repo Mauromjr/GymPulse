@@ -164,6 +164,46 @@
             font-weight: 700;
             color: #ffffff;
         }
+
+        .notif-wrapper { position: relative; }
+        .notif-wrapper .icon-btn { cursor: pointer; }
+
+        .notif-popup {
+            display: none;
+            position: absolute;
+            top: 48px;
+            right: 0;
+            width: 240px;
+            background-color: #121212;
+            border: 1px solid #262626;
+            border-radius: 16px;
+            padding: 14px;
+            z-index: 100;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .notif-popup.aberto { display: flex; }
+
+        .notif-header { font-size: 0.9rem; font-weight: 800; color: #ffffff; }
+        
+        .notif-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: #aaaaaa;
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        .notif-item i { color: #adff00; }
+        .notif-link {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #adff00;
+            text-decoration: none;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -178,11 +218,23 @@
             
             <i class="fa-solid fa-dumbbell" style="font-size: 1.8rem; color: #adff00; position: absolute; left: 50%; transform: translateX(-50%);"></i>
             
-            <!-- Sino com link para Solicitações -->
-            <a href="solicitacoes.html" th:href="@{/solicitacoes}" class="icon-btn" style="text-decoration: none;">
-                <i class="fa-regular fa-bell"></i>
-                <span class="badge">1</span>
-            </a>
+            <!-- Sino com popup -->
+            <div class="notif-wrapper">
+                <button type="button" class="icon-btn" id="btnSino" aria-label="Notificações">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="badge">1</span>
+                </button>
+
+                <div class="notif-popup" id="notifPopup">
+                    <div class="notif-header">Notificações</div>
+                    <div class="notif-item">
+                        <i class="fa-regular fa-clipboard"></i>
+                        <span>Você tem 1 solicitação pendente</span>
+                    </div>
+                    <a href="solicitacoes.html" th:href="@{/solicitacoes}" class="notif-link">Ver solicitações</a>
+                </div>
+            </div>
+
         </header>
 
         <div class="page-container">
@@ -256,6 +308,22 @@
         </div>
 
     </main>
+
+    <script>
+    const btnSino = document.getElementById('btnSino');
+    const popup = document.getElementById('notifPopup');
+
+    btnSino.addEventListener('click', function (e) {
+        e.stopPropagation();
+        popup.classList.toggle('aberto');
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!popup.contains(e.target)) {
+            popup.classList.remove('aberto');
+        }
+    });
+</script>
 
 </body>
 </html>

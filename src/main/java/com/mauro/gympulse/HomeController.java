@@ -13,7 +13,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Controller
 public class HomeController {
 
-     private final List<Solicitacao> solicitacoes = new CopyOnWriteArrayList<>(List.of(
+    private final List<Solicitacao> solicitacoes = new CopyOnWriteArrayList<>(List.of(
         new Solicitacao(1L, "Mauro", "P001")
     ));
 
@@ -38,28 +38,31 @@ public class HomeController {
 
     @PostMapping("/cadastro")
     public String realizarCadastro() {
-
         return "redirect:/login";
     }
 
     @GetMapping("/home")
     public String home(Model model) {
-        List<Solicitacao> solicitacoes = buscarSolicitacoes();
 
         model.addAttribute("solicitacoes", solicitacoes);
         model.addAttribute("totalSolicitacoes", solicitacoes.size());
 
         return "home";
     }
+
     @PostMapping("/solicitacoes/{id}/aceitar")
     public String aceitar(@PathVariable Long id) {
+
         solicitacoes.removeIf(s -> s.getId().equals(id));
+
         return "redirect:/home";
     }
 
     @PostMapping("/solicitacoes/{id}/recusar")
     public String recusar(@PathVariable Long id) {
+
         solicitacoes.removeIf(s -> s.getId().equals(id));
+
         return "redirect:/home";
     }
 
@@ -78,3 +81,4 @@ public class HomeController {
         return "solicitacoes";
     }
 
+}

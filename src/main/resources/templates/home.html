@@ -165,6 +165,7 @@
             color: #ffffff;
         }
 
+        /* ===== Popup de notificações ===== */
         .notif-wrapper { position: relative; }
         .notif-wrapper .icon-btn { cursor: pointer; }
 
@@ -173,7 +174,7 @@
             position: absolute;
             top: 48px;
             right: 0;
-            width: 240px;
+            width: 260px;
             background-color: #121212;
             border: 1px solid #262626;
             border-radius: 16px;
@@ -185,7 +186,6 @@
         .notif-popup.aberto { display: flex; }
 
         .notif-header { font-size: 0.9rem; font-weight: 800; color: #ffffff; }
-        
         .notif-item {
             display: flex;
             align-items: center;
@@ -204,41 +204,88 @@
             text-decoration: none;
             text-align: center;
         }
+
+        /* ===== Cartão de solicitação (aceitar / recusar) ===== */
+        .notif-card {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .notif-card-texto {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: #aaaaaa;
+        }
+        .notif-card-texto i { color: #adff00; }
+        .notif-acoes { display: flex; gap: 8px; }
+        .notif-acoes form { flex: 1; margin: 0; }
+        .notif-acoes button {
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-aceitar { background-color: #adff00; color: #000000; }
+        .btn-recusar { background-color: #2a2a2a; color: #ff5555; }
     </style>
 </head>
 <body>
 
     <main class="app-screen" style="justify-content: flex-start;">
-        
+
         <!-- Header -->
         <header class="top-header" style="position: relative;">
             <div class="profile-avatar">
                 <i class="fa-regular fa-user"></i>
             </div>
-            
+
             <i class="fa-solid fa-dumbbell" style="font-size: 1.8rem; color: #adff00; position: absolute; left: 50%; transform: translateX(-50%);"></i>
-            
+
             <!-- Sino com popup -->
             <div class="notif-wrapper">
                 <button type="button" class="icon-btn" id="btnSino" aria-label="Notificações">
                     <i class="fa-regular fa-bell"></i>
-                    <span class="badge">1</span>
+                    <span class="badge" th:if="${totalSolicitacoes > 0}" th:text="${totalSolicitacoes}">1</span>
                 </button>
 
                 <div class="notif-popup" id="notifPopup">
                     <div class="notif-header">Notificações</div>
-                    <div class="notif-item">
-                        <i class="fa-regular fa-clipboard"></i>
-                        <span>Você tem 1 solicitação pendente</span>
+
+                    <div class="notif-card" th:each="s : ${solicitacoes}">
+                        <div class="notif-card-texto">
+                            <i class="fa-regular fa-clipboard"></i>
+                            <span th:text="${s.nomePersonal} + ' quer ser seu personal'">Personal quer ser seu personal</span>
+                        </div>
+
+                        <div class="notif-acoes">
+                            <form th:action="@{/solicitacoes/{id}/aceitar(id=${s.id})}" method="post">
+                                <button type="submit" class="btn-aceitar">Aceitar</button>
+                            </form>
+                            <form th:action="@{/solicitacoes/{id}/recusar(id=${s.id})}" method="post">
+                                <button type="submit" class="btn-recusar">Recusar</button>
+                            </form>
+                        </div>
                     </div>
+
+                    <div class="notif-item" th:if="${#lists.isEmpty(solicitacoes)}">
+                        <span>Nenhuma notificação</span>
+                    </div>
+
                     <a href="solicitacoes.html" th:href="@{/solicitacoes}" class="notif-link">Ver solicitações</a>
                 </div>
             </div>
-
         </header>
 
         <div class="page-container">
-            
+
             <div class="welcome-box">
                 <h1 class="welcome-title">Olá, <span th:text="${aluno != null ? aluno.nome : 'Aluno'}">Aluno</span>! 👋</h1>
                 <p class="welcome-subtitle">Confira seu treino de hoje e mantenha o foco!</p>
@@ -288,7 +335,7 @@
 
             <!-- ações rápidas -->
             <span class="quick-actions-title">Ações Rápidas</span>
-            
+
             <div class="quick-actions-grid">
                 <a href="avaliacao.html" th:href="@{/avaliacao}" class="action-card">
                     <div class="action-icon">
@@ -309,21 +356,22 @@
 
     </main>
 
+    <!-- Abre e fecha o popup de notificações -->
     <script>
-    const btnSino = document.getElementById('btnSino');
-    const popup = document.getElementById('notifPopup');
+        const btnSino = document.getElementById('btnSino');
+        const popup = document.getElementById('notifPopup');
 
-    btnSino.addEventListener('click', function (e) {
-        e.stopPropagation();
-        popup.classList.toggle('aberto');
-    });
+        btnSino.addEventListener('click', function (e) {
+            e.stopPropagation();
+            popup.classList.toggle('aberto');
+        });
 
-    document.addEventListener('click', function (e) {
-        if (!popup.contains(e.target)) {
-            popup.classList.remove('aberto');
-        }
-    });
-</script>
+        document.addEventListener('click', function (e) {
+            if (!popup.contains(e.target)) {
+                popup.classList.remove('aberto');
+            }
+        });
+    </script>
 
 </body>
 </html>
